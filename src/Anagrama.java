@@ -7,6 +7,7 @@ Code, Compile, Run and Debug online from anywhere in world.
 
 *******************************************************************************/
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Anagrama {
     public static void main(String args[]) {
@@ -40,7 +41,7 @@ public class Anagrama {
             int value = cMap.get(c);
             System.out.println("Key: " + c + " - Value: " + value);
         }
-        
+
         for (int i = 0; i < word2.length(); i++) {
             char c = Character.toLowerCase(word2.charAt(i));
             int count = cMap.getOrDefault(c, 0);

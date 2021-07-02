@@ -1,5 +1,3 @@
-package easy;
-
 import java.util.*;
 
 /* Given an array of integers and an integer target
@@ -139,10 +137,114 @@ public class HashMaps {
         }
 
         String grouped = "";
+
         for (Map.Entry<String,String> p : m.entrySet()) {
             grouped = grouped + "[" + p.getValue().substring(1) + "]";
         }
 
         return grouped + "";
+    }
+
+    /* TIME O(N`2)
+     SPACE: O(N)
+    Given four lists A,B,C,D of integer values
+    compute how many tuples (i,j,k,l) there are such that
+    A[i] + B[j] + C[k] + D[l} is zero
+    Want to count the number of opposite pairs
+    1. Encontrar el par que sumen hasta un numero X en los arreglos A y B
+    2. Encontrar el par de numeros en los otros 2 arreglos que sumen hasta -x
+     */
+    public static int fourSumcOUNT(int[] A, int[] B, int[] C, int[] D) {
+        Map<Integer, Integer> m = new HashMap<>();
+        int ans = 0;
+        int sA = A.length;
+        int sB = B.length;
+        int sC = C.length;
+        int sD = D.length;
+
+        for (int i = 0; i < sA; i++) {
+            int x = A[i];
+            for (int j = 0; j < sB; j++) {
+                int y = B[j];
+
+                // first time that we seen the sumation result
+                int count = m.getOrDefault(x + y, 0);
+                m.put(x + y, count + 1);
+
+            }
+        }
+
+        // second for
+        for (int i =0; i < sC; i++) {
+            int x=C[i];
+            for (int j =0; j < sD; j++){
+                int y = D[j];
+                int target = -(x+y);
+
+                if(m.containsKey(target))
+                    ans += m.get(target) ;
+            }
+        }
+
+        return  ans;
+    }
+
+
+    /*
+    Given a string S and a string T, find the minimum window in S which will contain all the characters in T
+    s = "ADOBECODEBANCC" T="ABC"
+    output BANC
+     */
+    public static String minWindow(String s, String t) {
+        int len1 = s.length();
+        int len2 = s.length();
+        //
+        if(len2 < len1)
+            return "";
+
+        Map<Character, Integer> hashPat = new HashMap<>();
+        Map<Character, Integer> hashStr = new HashMap<>();
+
+        for(int i = 0; i < len2; i++) {
+            int count  = hashPat.getOrDefault(t.charAt(i), 0);
+            hashPat.put(t.charAt(i), count + 1);
+        }
+
+        // initialize 4 variables
+        int count = 0;
+        int left = 0;
+        int startIndex = -1; //initialize the current window
+        float minLen = Float.POSITIVE_INFINITY;// minimum length of substring that contains the pattern
+        int windowLen;
+        for(int right = 0; right < len1; right++) {
+            int countRight = hashStr.getOrDefault(s.charAt(right),0);
+            hashStr.put(s.charAt(right), countRight +1);
+
+            if(!hashPat.containsKey(s.charAt(right)))
+                hashPat.put(s.charAt(right), 0);
+
+            if(hashStr.get(s.charAt(right)) <= hashPat.get(s.charAt(right))) {
+                count +=1; //the element occurs more than one in the string
+            }
+
+            // check if the count is currently equal  to the length of the pattern
+            if(count == len2) {
+                while(hashStr.get(s.charAt(left)) > hashPat.get(s.charAt(left))) {
+                    // decrement the number of ocurances
+                    hashStr.put(s.charAt(left), hashStr.get(s.charAt(left))-1);
+                    left +=1;
+                }
+            }
+
+            windowLen = right - left +1;
+            if(minLen > windowLen){
+                minLen = windowLen;
+                startIndex = left;
+            }
+        }
+
+        if(startIndex == -1)
+            return  "";
+        return s.substring(startIndex, startIndex +  (int)minLen);
     }
 }

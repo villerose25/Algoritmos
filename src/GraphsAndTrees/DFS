@@ -1,0 +1,41 @@
+DEPTH FIRST SEARCH
+DFS always moves forward till there are no other nodes in current path,
+else backtrack.
+
+        2
+      /  \
+      1   5
+         / \
+        6 - 8
+
+Visited
+2
+1
+5
+8
+6
+
+FROM LEFT TO ROGHT O(V)
+
+STEPS
+1. Initialize the stack
+2. push the initial node, say it is called s, onto our stack
+3. Start a loop that will go on as long as the stack is not empty, the loop will contain the following logic:
+    - pop the last node in the stack , say it's called v as visited
+    - mark v as visited
+    - Loop over neighbors of v that are not visited
+    - push unvisited neighbor, say it's called n onto the stack
+
+  pseudocode
+  let St be stack
+  ST.push(s)
+  while(st is not empty)
+    // pop a vertex
+    v = St.pop
+    St.pop
+    mark v as visited
+
+    // push
+    for all neighbors n of v in Graph G:
+        if n is not visited
+            St.push(n)

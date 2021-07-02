@@ -1,0 +1,36 @@
+TIME
+O(V+E)
+Vertices
+Edges
+
+SPACE
+O(v)
+1 Initialize a queue
+2 Enqueue initial node to the queue
+3 Mark enqueued node as visited
+4 Begin a loop that will go on as long  as the queue is not empty
+
+Pseudocode
+let Q be queue
+Q.enqueue(s) / insert initial node in q
+mark as visited
+
+while(Q is not Empty)
+v = Q.dequeue()
+
+    for all neighbours n of v in Graph G
+        if n is not visited
+            Q.enqueue(n)
+            mark n as visited
+
+
+        2
+      /  \
+     1    5
+         / \
+        6 - 8
+
+     Lopp 1
+     enqueue 2 -> mark as visited
+     1 -> mark as visited
+     5 -> is not visited, mark as visited
